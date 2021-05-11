@@ -1,0 +1,41 @@
+{
+    "manifest_version":2,
+    "name":"Coin Status",
+    "version":"1.0",
+    "icons": {
+        "84": "coin.png"
+    }, 
+    "description":"The real time coin price list",
+    "browser_action":{
+        "default_icon":"coin.png",
+        "default_title":"Coin Status",
+        "default_popup":"main.html"
+    },
+    "permissions":[
+        "http://*/",
+        "bookmarks",
+        "tabs",
+        "history",
+        "storage",
+        "webRequest",
+        "ws://*/*",
+        "wss://*/*"
+    ],
+    "background":{
+        // "page":"background.html",
+        "scripts":["js/jquery-1.9.1.min.js","js/background.js"]
+    },
+    "content_scripts":[
+        {
+            "matches":[
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js":[
+                "js/jquery-1.9.1.min.js",
+                "js/main.js"
+            ],
+            "run_at":"document_start"
+        }
+    ]
+}
