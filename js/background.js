@@ -22,7 +22,8 @@ function connect(host) {
 		  "method":"SUBSCRIBE",
 		  "params": [
 		    "rvnusdt@aggTrade",
-		    "shibusdt@aggTrade"
+		    "shibusdt@aggTrade",
+		    "dogeusdt@aggTrade"
 		  ],
 		  "id": 1
 		};
@@ -50,6 +51,11 @@ function connect(host) {
 			sendData.price = data.p;
 			// $('#rvn').html(data.p);
 		}
+		if (data.s == 'DOGEUSDT') {
+			sendData.coin = "DOGE";
+			sendData.price = data.p;
+			// $('#rvn').html(data.p);
+		}
 		// chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
 		//     chrome.tabs.sendMessage(tabs[0].id, {action: sendData}, function(response) {});  
 		// });
@@ -60,9 +66,10 @@ function connect(host) {
 
 		// alert(JSON.stringify(sendData));
 		var port = chrome.runtime.connect({name: "coinStatus"});//通道名称
-		port.onDisconnect.addListener(obj => {
-			console.log('disconnected port');
-		});
+		port.onDisconnect.addListener(function() {
+	        var ignoreError = chrome.runtime.lastError;
+	        console.log("onDisconnect");
+        });
 
 		port.postMessage(sendData);//发送消息
 		//  port.onMessage.addListener(function(msg) {//监听消息
@@ -83,6 +90,16 @@ function connect(host) {
 
     //If the websocket is closed but the session is still active, create new connection again
     websocket.onclose = function() {
+    	req = {
+		  "method": "UNSUBSCRIBE",
+		  "params": [
+		    "rvnusdt@aggTrade",
+		    "shibusdt@aggTrade",
+		    "dogeusdt@aggTrade"
+		  ],
+		  "id": 1
+		}
+		websocket.send(JSON.stringify(data));
         websocket = undefined;
         chrome.storage.local.get(['demo_session'], function(data) {
             if (data.demo_session) {

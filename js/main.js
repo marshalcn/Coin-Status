@@ -64,6 +64,11 @@ chrome.runtime.onConnect.addListener((port)=> {
 			// sendData.price = data.p;
 			$('#rvn').html(msg.price);
 		}
+		if (msg.coin == 'DOGE') {
+			// sendData.coin = "RVN";
+			// sendData.price = data.p;
+			$('#doge').html(msg.price);
+		}
       // console.log(msg);
    });
 });
