@@ -1,4 +1,5 @@
 var websocket;
+var id = Math.floor(Math.random()*10) + 1;
 function createWebSocketConnection() {
     if('WebSocket' in window){
         chrome.storage.local.get("instance", function(data) {
@@ -23,9 +24,11 @@ function connect(host) {
 		  "params": [
 		    "rvnusdt@aggTrade",
 		    "shibusdt@aggTrade",
-		    "dogeusdt@aggTrade"
+		    "dogeusdt@aggTrade",
+		    "btcusdt@aggTrade",
+		    "beamusdt@aggTrade"
 		  ],
-		  "id": 1
+		  "id": id
 		};
 		websocket.send(JSON.stringify(data)); //将消息发送到服务端
     };
@@ -53,6 +56,16 @@ function connect(host) {
 		}
 		if (data.s == 'DOGEUSDT') {
 			sendData.coin = "DOGE";
+			sendData.price = data.p;
+			// $('#rvn').html(data.p);
+		}
+		if (data.s == 'BTCUSDT') {
+			sendData.coin = "BTC";
+			sendData.price = data.p;
+			// $('#rvn').html(data.p);
+		}
+		if (data.s == 'BEAMUSDT') {
+			sendData.coin = "BEAM";
 			sendData.price = data.p;
 			// $('#rvn').html(data.p);
 		}
@@ -95,9 +108,11 @@ function connect(host) {
 		  "params": [
 		    "rvnusdt@aggTrade",
 		    "shibusdt@aggTrade",
-		    "dogeusdt@aggTrade"
+		    "dogeusdt@aggTrade",
+		    "btcusdt@aggTrade",
+		    "beamusdt@aggTrade"
 		  ],
-		  "id": 1
+		  "id": id
 		}
 		websocket.send(JSON.stringify(data));
         websocket = undefined;

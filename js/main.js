@@ -69,6 +69,16 @@ chrome.runtime.onConnect.addListener((port)=> {
 			// sendData.price = data.p;
 			$('#doge').html(msg.price);
 		}
+		if (msg.coin == 'BTC') {
+			// sendData.coin = "RVN";
+			// sendData.price = data.p;
+			$('#btc').html(msg.price);
+		}
+		if (msg.coin == 'BEAM') {
+			// sendData.coin = "RVN";
+			// sendData.price = data.p;
+			$('#beam').html(msg.price);
+		}
       // console.log(msg);
    });
 });
@@ -88,9 +98,6 @@ window.onload = function(){
 	bg.createWebSocketConnection();
 	
 };
-window.onbeforeunload = function() {
-	chrome.runtime.Port.disconnect();
-}
 function myrefresh() {
 	window.location.reload();
 }
